@@ -10,9 +10,8 @@ export default function IsYourBirthday() {
   const handleOpenGift = () => {
     appContext.setState(prev => ({
       ...prev,
-      page: 3
+      page: 2
     }))
-    appContext.state.toggleAudioPlay()
   }
 
   return (
@@ -30,21 +29,19 @@ export default function IsYourBirthday() {
               <p>Kamu {targetName} kan? 😒</p>
             </>
         }
-        <p>Aku punya sesuatu buat kamu, buka yaa...</p>
+        <p>Yuk main tebak-tebakan. Nanti aku kasih hadiah</p>
+        <p>Mau ga?</p>
 
-        {/* <div className="w-full overflow-visible"> */}
-        {/*   <Lottie */}
-        {/*     animationData={GiftBox} */}
-        {/*     height={100} */}
-        {/*     width={100} */}
-        {/*   // className="bg-red-300" */}
-        {/*   /> */}
-        {/* </div> */}
-
-        <button className="bg-pink-400 hover:bg-pink-400/75 flex items-center p-2 gap-2 text-white rounded-lg mx-auto mt-4 animate-bounce" onClick={handleOpenGift}>
-          <FaGift />
-          <span>Buka</span>
-        </button>
+        <div className="flex gap-4">
+          <button className="bg-pink-400 hover:bg-pink-400/75 flex items-center p-2 gap-2 text-white rounded-lg mx-auto mt-4 animate-bounce" onClick={handleOpenGift}>
+            <FaGift />
+            <span>Mau</span>
+          </button>
+          <button className="bg-pink-400 hover:bg-pink-400/75 flex items-center p-2 gap-2 text-white rounded-lg mx-auto mt-4 animate-bounce">
+            <FaGift />
+            <span>Ga Mau</span>
+          </button>
+        </div>
       </div>
     </>
   )

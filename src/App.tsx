@@ -2,6 +2,7 @@ import { cn } from "./lib/utils"
 import WhoAreYou from "./WhoAreYou"
 import { AppContext, StateValue } from "./Context"
 import { useState } from "react"
+import Question from "./Question"
 import IsYourBirthday from "./IsYourBirthday"
 import BirthdayCard from "./BirthdayCard"
 import Flower from "./Flower"
@@ -28,6 +29,16 @@ function renderPage(page: number) {
           "md:w-[65%]"
         )}>
           <IsYourBirthday />
+        </div>
+      )
+    case 2:
+      return (
+        <div className={cn(
+          "w-[85%] mx-auto h-screen",
+          "grid place-items-center",
+          "md:w-[65%]"
+        )}>
+          <Question />
         </div>
       )
     case 3:
