@@ -1,4 +1,4 @@
-import { CSSProperties, HtmlHTMLAttributes, memo, useEffect, useRef } from "react";
+import { memo } from "react";
 import { cn } from "./lib/utils"
 import "./styles/baloon.css"
 
@@ -6,22 +6,6 @@ function random(num: number) {
   return Math.floor(Math.random() * num);
 }
 
-function getRandomStyles() {
-  const r = random(255);
-  const g = random(255);
-  const b = random(255);
-  const mt = random(200);
-  const ml = random(50);
-  const dur = random(5) + 5;
-
-  return `
-  background-color:;
-  color: rgba(${r},${g},${b},0.7); 
-  box-shadow: inset -7px -3px 10px rgba(${r - 10},${g - 10},${b - 10},0.7);
-  margin: ${mt}px 0 0 ${ml}px;
-  animation: float ${dur}s ease-in infinite
-  `;
-}
 function createBaloons(count: number) {
   const baloons = []
 
