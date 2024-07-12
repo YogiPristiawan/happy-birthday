@@ -139,7 +139,7 @@ const GreetingCardPage = (props: GreetingCardPageProps) => {
               <TypedWriter
                 key={i}
                 text={paragraph}
-                delay={75}
+                delay={60}
                 onFinish={i === props.paragraphs.length - 1 ? handleShowNextPageButton : handleShowNextParagraph}
                 className={cn(
                   "text-left mb-6 font-playwrite text-sm",
@@ -350,6 +350,7 @@ export default function BirthdayCard() {
         <div className={cn(
           "bg-transparent h-screen",
           "flex items-center justify-center",
+          "[animation:fade-in_2.3s_ease-in_forwards]"
         )}>
           <CardCover
             hideContent={renderedSheets.length > 0 && renderedSheets[renderedSheets.length - 1].sheetNumber >= 2}

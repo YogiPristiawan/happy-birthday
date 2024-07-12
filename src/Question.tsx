@@ -94,6 +94,7 @@ export default function Question() {
             !state.isAnswered ?
               state.question && (
                 <>
+                  <p className="my-2">Okey kita mulai yaa..</p>
                   <TypedWriter
                     text={state.question.question}
                     delay={70}
@@ -150,8 +151,8 @@ function QuestionResult() {
   if (questionContext.isAnswerCorrect) {
     return (
       <>
-        <p>YEAY Benar!!!</p>
-        <p>Karena kamu udah berhasil jawab, aku mau kasih hadiah. Buka yaa..</p>
+        <p className="my-2">Yeay BENAR!!!</p>
+        <p className="my-2">Karena kamu udah berhasil jawab, aku mau kasih hadiah. Buka yaa..</p>
 
         <button className="bg-pink-400 hover:bg-pink-400/75 flex items-center p-2 gap-2 text-white rounded-lg mx-auto mt-4 animate-bounce" onClick={handleOpenGift}>
           <FaGift />
@@ -162,9 +163,15 @@ function QuestionResult() {
   } else {
     return (
       <>
-        <p>Salah 😆</p>
-        <p>Jawabannya adalah: <span><b>{questionContext.question?.answer}</b></span></p>
-        <p>Meskipun kamu ga berhasil jawab, aku bakal tetep kasih hadiah kok. Buka yaa...</p>
+        <p className="my-2">SALAH 😆</p>
+        <p className="my-2">Jawabannya adalah:
+          <span className="text-semibold">
+            <i>
+              <b>{questionContext.question?.answer}</b>
+            </i>
+          </span>
+        </p>
+        <p className="my-2">Meskipun kamu ga berhasil jawab, aku bakal tetep kasih hadiah kok. Buka yaa...</p>
 
         <button className="bg-pink-400 hover:bg-pink-400/75 flex items-center p-2 gap-2 text-white rounded-lg mx-auto mt-4 animate-bounce" onClick={handleOpenGift}>
           <FaGift />
