@@ -168,7 +168,7 @@ function QuestionResult() {
   if (questionContext.isAnswerCorrect) {
     return (
       <>
-        <p className="my-2">Yeay BENAR!!!</p>
+        <p className="my-2">Yeay BENAR!!! 👏</p>
         <p className="my-2">Karena kamu udah berhasil jawab, aku mau kasih hadiah. Buka yaa..</p>
 
         <button className="bg-pink-400 hover:bg-pink-400/75 flex items-center p-2 gap-2 text-white rounded-lg mx-auto mt-4 animate-bounce" onClick={handleOpenGift}>

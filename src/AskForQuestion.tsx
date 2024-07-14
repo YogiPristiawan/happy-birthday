@@ -80,19 +80,15 @@ export default function AskForQuestion() {
             <>
               {
                 appContext.state.correctTargetName ?
-                  <p className="my-2">Haiii {targetName}, Sebenernya iseng aja nanya nama. Aku udah tau siapa kamu 😋</p>
+                  <p className="my-2">Haiii {targetName} 👋🏻</p>
                   :
                   <>
-                    <p className="my-2">Ishh hamu bohong yaa? 😤</p>
-                    <p className="my-2">Kamu {targetName} kan? 😒</p>
+                    <p className="my-2">Ishh hamu bohong yaa? Kamu {targetName} kan? 😒</p>
                   </>
               }
               <p className="my-2">Yuk main tebak-tebakan. Nanti aku kasih hadiah. Mau ga?</p>
 
               <div className="flex gap-4">
-                <button className="bg-green-500 hover:bg-green-500/75 flex items-center p-2 gap-2 text-white rounded-lg mx-auto mt-4 animate-bounce" onClick={handleWant}>
-                  <span>👌 Mau</span>
-                </button>
                 <button
                   ref={button}
                   className={cn(
@@ -104,6 +100,9 @@ export default function AskForQuestion() {
                   onClick={handleOnMouseOver}
                 >
                   <span>🙏 Ga dulu</span>
+                </button>
+                <button className="bg-green-500 hover:bg-green-500/75 flex items-center p-2 gap-2 text-white rounded-lg mx-auto mt-4 animate-bounce" onClick={handleWant}>
+                  <span>👌 Mau</span>
                 </button>
               </div>
             </>

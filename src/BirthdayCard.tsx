@@ -2,12 +2,46 @@ import { createContext, useCallback, useContext, useEffect, useRef, useState } f
 import { cn } from "./lib/utils"
 import "./styles/birthday-card.css"
 import { AppContext } from "./Context"
-import { ImBookmark } from "react-icons/im";
 import TypedWriter from "./components/TypedWriter";
 import BaloonSpawner from "./BalloonSpawner"
 import { DotLottieReact } from "@lottiefiles/dotlottie-react"
+import { PiBookOpenTextFill } from "react-icons/pi";
+
+const months = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
 
 const targetName = import.meta.env.VITE_TARGET_NAME
+const birthdayDate = import.meta.env.VITE_BIRTHDAY_DATE
+
+type BirthdayDateToDisplay = {
+  ordinalIndicator: string,
+  date: string,
+  month: string,
+  year: string
+}
+
+function birthdayDateToDisplay(dateStr: string): BirthdayDateToDisplay {
+  const d = new Date(dateStr)
+  const date = d.getDate()
+  let ordinalIndicator = "th"
+
+  if (date === 1) {
+    ordinalIndicator = "st"
+  } else if (date === 2) {
+    ordinalIndicator = "nd"
+  } else if (date === 3) {
+    ordinalIndicator = "rd"
+  }
+
+  return {
+    ordinalIndicator: ordinalIndicator,
+    date: date.toString(),
+    month: months[d.getMonth()],
+    year: d.getFullYear().toString()
+  }
+}
 
 type GreetingPage = {
   sheetNumber: number
@@ -27,7 +61,6 @@ const greetingPages: GreetingPage[] = [
         src="/cat-pencil.lottie"
         autoplay
         loop
-      // className="[transform:rotateY(-160deg)]"
       />
     )
   },
@@ -48,15 +81,13 @@ const greetingPages: GreetingPage[] = [
     sheetNumber: 3,
     paragraphs: [
       "Life's a rollercoaster, but you've got the strength to ride through the ups and downs. Keep smiling, keep shining, and know that brighter days are always ahead.",
-      "You’re stronger than you think. You've got this!."
+      "You’re stronger than you think!"
     ],
     backPageAnimation: (
       <DotLottieReact
-        // src="/cat-hot-air-balloon.lottie"
         src="/cat-rocket.lottie"
         autoplay
         loop
-      // className="[transform:rotateY(-160deg)]" 
       />
     )
   },
@@ -70,7 +101,6 @@ const greetingPages: GreetingPage[] = [
         src="/cat-squeeze.lottie"
         autoplay
         loop
-      // className="[transform:rotateY(-160deg)]" 
       />
     )
   },
@@ -102,7 +132,6 @@ type GreetingCardPageProps = {
 const GreetingCardPage = (props: GreetingCardPageProps) => {
   const [showNextPageButton, setShowNextPageButton] = useState(false)
   const [currentParagraphIdx, setCurrentParagraphIdx] = useState(0)
-
   const cardContext = useContext(GreetingCardPageContext)
 
   const handleShowNextPageButton = useCallback(() => {
@@ -120,12 +149,16 @@ const GreetingCardPage = (props: GreetingCardPageProps) => {
   return (
     <>
       <div className={cn(
-        "absolute bg-[#F7879A] w-[250px] h-[350px] -z-10 left-0 top-0 px-4 py-9",
-        "shadow-[inset_100px_20px_100px_rgba(0,0,0,0.2)]",
+        "absolute bg-[#F9A8D4] w-[250px] h-[350px] -z-10 left-0 top-0 px-4 py-9",
+        "w-full h-full",
+        "shadow-[inset_100px_20px_100px_rgba(90,90,90,0.2)]",
         "font-playwrite text-sm",
+        "lg:text-base lg:px-5 lg:py-10",
         "z-10",
         "[transform-origin:left] [transition:.6s]",
         {
+          "[box-shadow:inset_100px_20px_100px_rgba(30,30,30,.2)]": props.isFlipped,
+
           "[transform:rotateY(-160deg)]": props.isFlipped, // flip
           "hidden": cardContext.rightSheet >= (props.sheetNumber + 2)
         }
@@ -139,8 +172,9 @@ const GreetingCardPage = (props: GreetingCardPageProps) => {
                 delay={60}
                 onFinish={i === props.paragraphs.length - 1 ? handleShowNextPageButton : handleShowNextParagraph}
                 className={cn(
-                  "text-left mb-6 font-playwrite text-sm",
-                  "font-playwrite leading-loose",
+                  "text-left mb-6",
+                  "font-playwrite leading-loose text-slate-900",
+                  "lg:[line-height:2.25]",
                   {
                     "invisible": props.isFlipped
                   }
@@ -152,7 +186,7 @@ const GreetingCardPage = (props: GreetingCardPageProps) => {
         {
           !props.isFlipped && showNextPageButton && (
             <button onClick={props.isLastSheet ? cardContext.nextSection : cardContext.nextPage} className={cn(
-              "underline underline-offset-2 cursor-pointer opacity-0 absolute bottom-9 right-4",
+              "underline underline-offset-2 cursor-pointer opacity-0 absolute bottom-9 right-4 text-slate-900",
               {
                 "[animation:fade-in_1s_ease-in_forwards]": showNextPageButton,
                 "invisible": props.isFlipped,
@@ -193,10 +227,13 @@ type CardCoverProps = {
 }
 
 const CardCover = ({ children, ...props }: CardCoverProps) => {
+  const birthdayDateDisplay = birthdayDateToDisplay(birthdayDate)
+
   return (
     <>
       <div className={cn(
         "birthdayCard *:rounded-r-lg",
+        "lg:w-[312.5px] lg:h-[437.5px]",
         {
           "[transform:perspective(2500px)_rotate(5deg)]": props.cardOpen,
           "[box-shadow:inset_100px_20px_100px_rgba(0,0,0,.2),_0_10px_100px_rgba(0,0,0,0.5)]": props.cardOpen
@@ -206,6 +243,8 @@ const CardCover = ({ children, ...props }: CardCoverProps) => {
       >
         <div className={cn(
           "cardFront",
+          "w-full h-full",
+          "lg:text-base",
           {
             "[transform:rotateY(-160deg)]": props.cardOpen,
             "z-10": props.hideContent
@@ -215,22 +254,41 @@ const CardCover = ({ children, ...props }: CardCoverProps) => {
           <div className={cn(
             "happy",
             "mt-[30px] mx-[30px]",
-            "text-sm p-2 rounded-lg font-semibold",
+            "px-2 pt-2 pb-2 rounded-lg font-semibold",
+            "lg:px-3 lg:pt-3",
             {
+              "[animation:fade-in_0.6s_ease-in_forwards]": !props.cardOpen,
               "[animation:fade-out_0.6s_ease-in_forwards]": props.cardOpen,
               "invisible": props.cardOpen
             }
           )}>
-            <p className="font-playwrite">
+            <p className="font-playwrite text-slate-900 font-semibold">
               Happy Birthday
             </p>
-            <p className="font-playwrite mt-4">{targetName}</p>
+            <p className="font-playwrite mt-4 font-semibold">{targetName}</p>
+          </div>
+          <div className={cn(
+            "happy w-fit mx-auto",
+            "px-2 pb-2 pt-1 rounded-b-lg font-semibold",
+            "lg:px-3 lg:pb-3",
+            {
+              "[animation:fade-in_0.6s_ease-in_forwards]": !props.cardOpen,
+              "[animation:fade-out_0.6s_ease-in_forwards]": props.cardOpen,
+              "invisible": props.cardOpen
+            }
+          )}>
+            <p className="font-playwrite text-slate-900 font-semibold">
+              {`${birthdayDateDisplay.month} ${birthdayDateDisplay.date}`}
+              <sup>{birthdayDateDisplay.ordinalIndicator}</sup>
+              {`, ${birthdayDateDisplay.year}`}
+            </p>
           </div>
 
           {/* front page: cat mail */}
           <div className={cn(
-            "h-[80%] overflow-hidden absolute left-0 right-0 bottom-0",
+            "h-[62%] overflow-hidden absolute left-0 right-0 bottom-0",
             {
+              "[animation:fade-in_0.6s_ease-in_forwards]": !props.cardOpen,
               "[animation:fade-out_0.2s_ease-in_forwards]": props.cardOpen,
             }
           )}>
@@ -239,6 +297,7 @@ const CardCover = ({ children, ...props }: CardCoverProps) => {
               loop
               autoplay
             />
+
           </div>
 
           {/* back page: cat balloon */}
@@ -260,23 +319,24 @@ const CardCover = ({ children, ...props }: CardCoverProps) => {
         {
           !props.cardOpen && (
             <button onClick={props.handleOpenCard} className={cn(
-              "bg-[#F7879A] pr-2 py-2",
+              "bg-[#F9A8D4] pr-2 py-2",
               "absolute bottom-8 left-full flex items-center gap-1",
               "text-white text-xs rounded-r-lg",
+              "lg:text-base",
               {
                 "hidden": props.cardOpen
               }
             )}>
               <span>Open</span>
-              <span><ImBookmark /></span>
+              <span><PiBookOpenTextFill /></span>
             </button>
           )
         }
         {children}
         <div className={cn(
-          "absolute bg-[#F7879A] w-[250px] h-[350px] -z-10 left-0 top-0 px-4 py-9",
+          "absolute bg-[#F9A8D4] w-[250px] h-[350px] -z-10 left-0 top-0 px-4 py-9",
           "shadow-[inset_100px_20px_100px_rgba(0,0,0,0.2)]",
-          "font-playwrite text-sm",
+          "lg:w-[312.5px] lg:h-[437.5px]",
           "-z-10"
         )}>
         </div>
@@ -347,7 +407,8 @@ export default function BirthdayCard() {
         <div className={cn(
           "bg-transparent h-screen",
           "flex items-center justify-center",
-          "[animation:fade-in_2.3s_ease-in_forwards]"
+          "[animation:fade-in_2.3s_ease-in_forwards]",
+          "lg:text-xl"
         )}>
           <CardCover
             hideContent={renderedSheets.length > 0 && renderedSheets[renderedSheets.length - 1].sheetNumber >= 2}
