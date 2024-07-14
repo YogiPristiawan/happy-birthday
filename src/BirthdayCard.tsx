@@ -7,10 +7,6 @@ import TypedWriter from "./components/TypedWriter";
 import BaloonSpawner from "./BalloonSpawner"
 import { DotLottieReact } from "@lottiefiles/dotlottie-react"
 
-import CatMail from "./assets/animation/cat-mail.json"
-import CatBalloon from "./assets/animation/cat-balloon.json"
-import CatPencil from "./assets/animation/cat-pencil.json"
-
 const targetName = import.meta.env.VITE_TARGET_NAME
 
 type GreetingPage = {
@@ -28,7 +24,7 @@ const greetingPages: GreetingPage[] = [
     ],
     backPageAnimation: (
       <DotLottieReact
-        data={CatPencil}
+        src="/cat-pencil.lottie"
         autoplay
         loop
       // className="[transform:rotateY(-160deg)]"
@@ -42,7 +38,7 @@ const greetingPages: GreetingPage[] = [
     ],
     backPageAnimation: (
       <DotLottieReact
-        data={CatBalloon}
+        src="/cat-hero.lottie"
         autoplay
         loop
       />
@@ -56,7 +52,8 @@ const greetingPages: GreetingPage[] = [
     ],
     backPageAnimation: (
       <DotLottieReact
-        data={CatMail}
+        // src="/cat-hot-air-balloon.lottie"
+        src="/cat-rocket.lottie"
         autoplay
         loop
       // className="[transform:rotateY(-160deg)]" 
@@ -70,7 +67,7 @@ const greetingPages: GreetingPage[] = [
     ],
     backPageAnimation: (
       <DotLottieReact
-        data={CatMail}
+        src="/cat-squeeze.lottie"
         autoplay
         loop
       // className="[transform:rotateY(-160deg)]" 
@@ -117,7 +114,7 @@ const GreetingCardPage = (props: GreetingCardPageProps) => {
   const handleShowNextParagraph = useCallback(() => {
     setTimeout(() => {
       setCurrentParagraphIdx(prev => prev + 1)
-    }, 1000)
+    }, 800)
   }, [])
 
   return (
@@ -134,7 +131,7 @@ const GreetingCardPage = (props: GreetingCardPageProps) => {
         }
       )}>
         {
-          props.paragraphs.slice(0, currentParagraphIdx + 1).map((paragraph, i) => {
+          !props.isFlipped && props.paragraphs.slice(0, currentParagraphIdx + 1).map((paragraph, i) => {
             return (
               <TypedWriter
                 key={i}
@@ -238,7 +235,7 @@ const CardCover = ({ children, ...props }: CardCoverProps) => {
             }
           )}>
             <DotLottieReact
-              data={CatMail}
+              src="/cat-mail.lottie"
               loop
               autoplay
             />
@@ -254,7 +251,7 @@ const CardCover = ({ children, ...props }: CardCoverProps) => {
             }
           )}>
             <DotLottieReact
-              data={CatBalloon}
+              src="/cat-balloon.lottie"
               loop
               autoplay
             />

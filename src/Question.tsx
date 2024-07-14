@@ -1,6 +1,6 @@
 import { cn } from "./lib/utils"
 import TypedWriter from "./components/TypedWriter"
-import { createContext, useCallback, useContext, useEffect, useRef, useState } from "react"
+import { createContext, forwardRef, useCallback, useContext, useEffect, useRef, useState } from "react"
 import { HiPaperAirplane } from "react-icons/hi2"
 import { AppContext } from "./Context"
 import { FaGift } from "react-icons/fa6";
@@ -46,6 +46,8 @@ type QuestionState = {
 export default function Question() {
   const [answerValue, setAnswerValue] = useState("")
   const [showAnswerForm, setShowAnswerForm] = useState<boolean>(false)
+  const [showErrorForm, setShowErrorForm] = useState<boolean>(false)
+  const answerFormRef = useRef<HTMLInputElement>(null)
 
   const questionRef = useRef(questions[Math.floor(Math.random() * questions.length)])
 
@@ -67,6 +69,14 @@ export default function Question() {
   }, [])
 
   const handleAnswer = () => {
+    if (answerValue === "") {
+      setShowErrorForm(true)
+      if (answerFormRef && answerFormRef.current) {
+        answerFormRef.current.focus()
+      }
+      return
+    }
+
     const isAnswerCorrect = answerValue.toLowerCase() === questionRef.current.answer.toLowerCase()
     if (isAnswerCorrect) {
       setState(prev => ({
@@ -97,16 +107,20 @@ export default function Question() {
                   <p className="my-2">Okey kita mulai yaa..</p>
                   <TypedWriter
                     text={state.question.question}
-                    delay={70}
+                    delay={55}
                     onFinish={handleShowAnswerForm}
-                    className="text-lg my-2"
+                    className="my-2"
                   />
+
+
+                  {showErrorForm && <p className="text-pink-400 text-xs text-left mt-4">Diisi dulu dong -_-</p>}
 
                   {
                     showAnswerForm && (
                       <AnswerForm
                         handleChange={(value) => setAnswerValue(value)}
                         handleAnswer={handleAnswer}
+                        ref={answerFormRef}
                       />
                     )
                   }
@@ -125,16 +139,19 @@ type AnswerFormProps = {
   handleAnswer: () => void
 }
 
-function AnswerForm(props: AnswerFormProps) {
+const AnswerForm = forwardRef<HTMLInputElement, AnswerFormProps>((props, ref) => {
   return (
     <div className="flex gap-2">
-      <input type="text" className="border rounded-lg px-2 py-1 grow focus:outline-pink-300" autoFocus onChange={(e) => props.handleChange(e.target.value)} />
+      <input type="text" className="border rounded-lg px-2 py-1 grow focus:outline-pink-300" autoFocus onChange={(e) => props.handleChange(e.target.value)} ref={ref} />
       <button className="bg-pink-400 rounded-full text-white p-2 hover:bg-pink-400/75" onClick={props.handleAnswer}>
         <HiPaperAirplane className="w-[20px] h-[20px]" />
       </button>
     </div>
   )
-}
+})
+
+// function AnswerForm(props: AnswerFormProps) {
+// }
 
 function QuestionResult() {
   const questionContext = useContext(QuestionContext)
