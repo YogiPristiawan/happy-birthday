@@ -3,7 +3,13 @@
 @tailwind utilities;
 
 @layer base {
-  * {
-    /*@apply outline outline-1;*/
+  body, p {
+    font-family: "Itim", cursive;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  .dodge {
+    transform: translateX(calc(100vw - 100px)) !important; /* Moves the button far to the right */
   }
 }

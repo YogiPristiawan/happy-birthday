@@ -7,8 +7,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        'allura': ['Allura'],
-        'playwrite': ['"Playwrite NL"']
+        'playwrite': ['"Playwrite NL"'],
+        'itim': ['"Itim"']
       }
     },
   },

@@ -1,5 +1,4 @@
 import { cn } from "./lib/utils"
-import BlackKittenAnimation from "./assets/animation/black-kitten.json"
 import { DotLottieReact } from "@lottiefiles/dotlottie-react"
 import TypedWriter from "./components/TypedWriter"
 import { useCallback, useContext, useRef, useState } from "react"
@@ -51,7 +50,7 @@ export default function WhoAreYou() {
         "h-[60px] overflow-visible absolute w-full bottom-full left-0"
       )}>
         <DotLottieReact
-          data={BlackKittenAnimation}
+          src="/cat-peek.lottie"
           loop
           autoplay
           className={cn(
@@ -62,9 +61,9 @@ export default function WhoAreYou() {
 
       <TypedWriter
         text="Haiii, nama kamu siapa?"
-        delay={70}
+        delay={55}
         callback={handleCallback}
-        className="text-lg my-2"
+        className="my-2"
       />
 
       {

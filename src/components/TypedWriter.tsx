@@ -8,30 +8,28 @@ type TypedProps = {
   className?: string
 }
 
-export default function TypedWriter(props: TypedProps) {
+export default function TypedWriter({ onFinish, callback, text, delay, ...props }: TypedProps) {
   const [currentChars, setCurrentChars] = useState('')
   const [currentIndex, setCurrentIndex] = useState(0)
 
-  // console.log("props.text", props.text)
-
   useEffect(() => {
-    if (currentIndex >= props.text.length) {
-      if (props.callback) {
-        props.callback()
+    if (currentIndex >= text.length) {
+      if (callback) {
+        callback()
       }
-      if (props.onFinish) {
-        props.onFinish()
+      if (onFinish) {
+        onFinish()
       }
       return
     }
 
     const timeout = setTimeout(() => {
-      setCurrentChars(currentChars + props.text[currentIndex])
+      setCurrentChars(currentChars + text[currentIndex])
       setCurrentIndex(prev => prev + 1)
-    }, props.delay)
+    }, delay)
 
     return () => clearTimeout(timeout)
-  }, [currentChars, currentIndex, props.onFinish, props.callback])
+  }, [currentChars, currentIndex, onFinish, callback, text, delay])
 
   return <p className={props.className}>{currentChars}</p>
 }
