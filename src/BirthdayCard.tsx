@@ -54,7 +54,7 @@ const greetingPages: GreetingPage[] = [
     sheetNumber: 1,
     paragraphs: [
       `To: ${targetName}`,
-      `On this special day and beyond, I wish for you to always find joy in every moment. May all your dreams and aspirations come true, bringing you endless happiness.`
+      `On this special day and beyond, I wish for you to always find joy in every moment. May all your dreams and goals come true, bringing you endless happiness.`
     ],
     backPageAnimation: (
       <DotLottieReact
