@@ -80,7 +80,7 @@ export default function AskForQuestion() {
             <>
               {
                 appContext.state.correctTargetName ?
-                  <p className="my-2">Haiii {targetName} 👋🏻</p>
+                  <p className="my-2">Haiii {targetName} 👋</p>
                   :
                   <>
                     <p className="my-2">Ishh hamu bohong yaa? Kamu {targetName} kan? 😒</p>
