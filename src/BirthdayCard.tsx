@@ -80,7 +80,7 @@ const greetingPages: GreetingPage[] = [
   {
     sheetNumber: 3,
     paragraphs: [
-      "Life's a rollercoaster, but you've got the strength to ride through the ups and downs. Keep smiling, keep shining, and know that brighter days are always ahead.",
+      "Life is a rollercoaster, but you've got the strength to ride through the ups and downs. Keep smiling, keep shining, and know that brighter days are always ahead.",
       "You’re stronger than you think!"
     ],
     backPageAnimation: (
@@ -197,7 +197,7 @@ const GreetingCardPage = (props: GreetingCardPageProps) => {
           )
         }
         {
-          props.backPageAnimation && (
+          showNextPageButton && props.backPageAnimation && (
             <div className={cn(
               "overflow-hidden absolute left-0 right-0 top-0",
               "h-full w-full",
@@ -397,7 +397,6 @@ export default function BirthdayCard() {
 
   return (
     <>
-      <BaloonSpawner />
       <GreetingCardPageContext.Provider value={{
         rightSheet: renderedSheets.length === 0 ? 0 : renderedSheets[renderedSheets.length - 1].sheetNumber,
         nextSection: handleNextSection,
@@ -406,10 +405,12 @@ export default function BirthdayCard() {
       }}>
         <div className={cn(
           "bg-transparent h-screen",
-          "flex items-center justify-center",
+          "bg-teal-100",
+          "flex items-center justify-center rounded-r-lg",
           "[animation:fade-in_2.3s_ease-in_forwards]",
           "lg:text-xl"
         )}>
+          <BaloonSpawner />
           <CardCover
             hideContent={renderedSheets.length > 0 && renderedSheets[renderedSheets.length - 1].sheetNumber >= 2}
             cardOpen={cardOpen}
