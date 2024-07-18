@@ -26,7 +26,7 @@ export default function AskForQuestion() {
           ...prev,
           showButton: true
         }))
-      }, 4000)
+      }, 3800)
 
       return () => clearTimeout(timeoutId)
     }
