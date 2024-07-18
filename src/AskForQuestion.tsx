@@ -83,7 +83,7 @@ export default function AskForQuestion() {
                   <p className="my-2">Haiii {targetName} 👋</p>
                   :
                   <>
-                    <p className="my-2">Ishh hamu bohong yaa? Kamu {targetName} kan? 😒</p>
+                    <p className="my-2">Ishh kamu bohong yaa? Kamu {targetName} kan? 😒</p>
                   </>
               }
               <p className="my-2">Yuk main tebak-tebakan. Nanti aku kasih hadiah. Mau ga?</p>
